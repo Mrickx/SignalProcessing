@@ -31,14 +31,23 @@ import scipy.io.wavfile as wf
 
 def read_wavefile(path):
 
-    # your code here #
+    signal, sampling_rate = audiofile.read(path)
 
-    return out
+    return signal,sampling_rate
 
 # call and test your function here #
-LocateClaps = "path/to/LocateClaps/folder"
+LocateClaps = "LocateClaps"
 files = glob(f"{LocateClaps}/*.wav")
+# Chemin vers le fichier spécifique
+specific_file = "LocateClaps\\M1_0.wav"
 
+# Appel de la fonction pour lire ce fichier
+signal, sampling_rate = read_wavefile(specific_file)
+
+# Affichage des résultats
+print(f"Fichier : {specific_file}")
+print(f"Signal : {signal[:10]} ...")  # Aperçu du signal
+print(f"Taux d'échantillonnage : {sampling_rate}")
 
 # %% [markdown]
 # ### 1.2 Buffering
