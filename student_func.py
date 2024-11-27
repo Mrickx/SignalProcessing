@@ -89,21 +89,30 @@ for i, sample in enumerate(signal):
 # %%
 def normalise(s):
     
-    # your code here #
+    max_val=np.max(np.abs(s))
+    if max_val == 0:
+        return s
 
-    return out
+    return s/max_val
 
 # call and test your function here #
+sin_normalise = normalise(sin)
 
+plt.plot(sin, label="Original")
+plt.plot(sin_normalise, label="Normalisé")
+graph("Comparaison du signal original et normalisé","Echantillon","Amplitude")
+plt.legend()
+plt.show()
+"""all_signals_normalise = []
+for signal in all_signals:
+    signal_normalise = normalise(signal)
+    all_signals_normalise.append(signal_normalise)"""
 # %% [markdown]
 # #### 1.3.2 Downsampling
 #g
 # %%
 ## 1 - spectral analysis via spectrogram
--
-plt.specgram(sin,Fs=44100)
-plt.show()
-plt.specgram(signal, Fs= 44100 )
+plt.specgram( , Fs= )
 plt.title("Spectrogram")
 plt.show()
 
