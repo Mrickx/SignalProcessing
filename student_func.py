@@ -68,17 +68,18 @@ from collections import deque
 def create_ringbuffer(maxlen):
     
     # your code here #
+    out = deque(maxlen=maxlen)
 
     return out
 
 # call and test your function here #
-stride = 
+stride = 0
 maxlen = 750
 
 # reading your signal as a stream:
-for i, sample in enumerate(your_signal):
-    your_buffer.append(sample)
-
+my_buffer = create_ringbuffer(maxlen)
+for i, sample in enumerate(signal):
+    my_buffer.append(sample)
     # your code here #
 
 # %% [markdown]
