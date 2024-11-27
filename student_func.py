@@ -5,7 +5,7 @@
 # ## 1 Offline system
 # ### 1.1 Data generation and dataset
 #ici
-
+#a
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
@@ -51,7 +51,7 @@ print(f"Taux d'échantillonnage : {sampling_rate}")
 
 # %% [markdown]
 # ### 1.2 Buffering
-
+#g
 # %%
 from collections import deque
 
@@ -74,7 +74,7 @@ for i, sample in enumerate(your_signal):
 # %% [markdown]
 # ### 1.3 Pre-processing
 # #### 1.3.1 Normalisation
-
+#a
 # %%
 def normalise(s):
     
@@ -86,7 +86,7 @@ def normalise(s):
 
 # %% [markdown]
 # #### 1.3.2 Downsampling
-
+#g
 # %%
 ## 1 - spectral analysis via spectrogram
 plt.specgram( , Fs= )
@@ -105,7 +105,7 @@ def create_filter_cauer(wp, ws, gpass, gstop, fs):
     # your code here #
 
     return B, A
-
+#a
 ## 3 - Decimation
 def downsampling(sig, B, A, M):
 
@@ -118,7 +118,7 @@ def downsampling(sig, B, A, M):
 
 # %% [markdown]
 # ### 1.4 Cross-correlation
-
+#g
 # %%
 ## 1.4
 import scipy.signal as sc
@@ -137,7 +137,7 @@ xcorr_fftconv = sc.fftconvolve(your_signal, your_signal[::-1], 'full') # [::-1] 
 # %% [markdown]
 # ### 1.5 Localisation
 # #### 1.5.1 TDOA
-
+#a
 # %%
 def TDOA(xcorr):
     
@@ -147,7 +147,7 @@ def TDOA(xcorr):
 
 # %% [markdown]
 # #### 1.5.2 Equation system
-
+#g
 # %%
 from scipy.optimize import root
 
@@ -179,7 +179,7 @@ def source_angle(coordinates):
 
 # %% [markdown]
 # ### 1.6 System accuracy and speed
-
+#a
 # %%
 ## 1.6.1
 def accuracy(pred_angle, gt_angle, threshold):
