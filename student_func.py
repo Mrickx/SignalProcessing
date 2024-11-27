@@ -90,7 +90,10 @@ def normalise(s):
 #g
 # %%
 ## 1 - spectral analysis via spectrogram
-plt.specgram( , Fs= )
+-
+plt.specgram(sin,Fs=44100)
+plt.show()
+plt.specgram(signal, Fs= 44100 )
 plt.title("Spectrogram")
 plt.show()
 
