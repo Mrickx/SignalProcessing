@@ -39,14 +39,14 @@ def read_wavefile(path):
 LocateClaps = "LocateClaps"
 files = glob(f"{LocateClaps}/*.wav")
 # Chemin vers le fichier spécifique
-specific_file = "LocateClaps\\M1_0.wav"
+specific_file = files[0]
 
 # Appel de la fonction pour lire ce fichier
 signal, sampling_rate = read_wavefile(specific_file)
 
 # Affichage des résultats
 print(f"Fichier : {specific_file}")
-print(f"Signal : {signal[:10]} ...")  # Aperçu du signal
+print(f"Signal : {signal} ")  # Aperçu du signal
 print(f"Taux d'échantillonnage : {sampling_rate}")
 
 # %% [markdown]
