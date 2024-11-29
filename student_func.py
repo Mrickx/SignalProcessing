@@ -1,6 +1,10 @@
 # %% [markdown]
 # # Signal Processing Project: real-time sound localisation
-
+#!!!!!!!!!!!!!!!!!ATTENTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ #!!! Ne pas appeler les variables signal car il peut confonde avec signal. de scipy!!!
+ #J'ai donc remplacer tous les "signal" --> "signal_audio"
+#!!!!!!!!!!!!!!!!Attention!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+ 
 # %% [markdown]
 # ## 1 Offline system
 # ### 1.1 Data generation and dataset
@@ -11,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Graph import graph
 import os 
+from scipy import signal
 
 def create_sine_wave(f, A, fs, N):
     
@@ -35,11 +40,18 @@ from glob import glob
 import scipy.io.wavfile as wf
 import audiofile 
 
+
+#!!!!!!!!!!!!!!!!!ATTENTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ #!!! Ne pas appeler les variables signal car il peut confonde avec signal. de scipy!!!
+ #J'ai donc remplacer tous les "signal" --> "signal_audio"
+#!!!!!!!!!!!!!!!!Attention!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
+
 def read_wavefile(path):
 
-    signal, sampling_rate = audiofile.read(path)
+    signal_audio, sampling_rate = audiofile.read(path)
 
-    return signal,sampling_rate
+    return signal_audio,sampling_rate
 
 # call and test your function here #
 LocateClaps = "LocateClaps"
@@ -50,8 +62,8 @@ all_signals = []
 
 # Lire et traiter chaque fichier
 for file in files:
-    signal, sampling_rate = read_wavefile(file)
-    all_signals.append(signal)  # Ajouter le signal à la liste
+    signal_audio, sampling_rate = read_wavefile(file)
+    all_signals.append(signal_audio)  # Ajouter le signal à la liste
 plt.plot(all_signals[0])
 graph({files[0]},"Temps","Amplitude")
 plt.show()
@@ -78,7 +90,7 @@ maxlen = 750
 
 # reading your signal as a stream:
 my_buffer = create_ringbuffer(maxlen)
-for i, sample in enumerate(signal):
+for i, sample in enumerate(signal_audio):
     my_buffer.append(sample)
     # your code here #
 
@@ -112,7 +124,13 @@ for signal in all_signals:
 #g
 # %%
 ## 1 - spectral analysis via spectrogram
-plt.specgram( , Fs= )
+
+specific_file = "LocateClaps\\M1_0.wav"#J'ai besoin signal audio 
+signal_audio, sampling_rate = read_wavefile(specific_file)
+
+
+
+plt.specgram(signal_audio, Fs=sampling_rate )
 plt.title("Spectrogram")
 plt.show()
 
@@ -120,12 +138,19 @@ plt.show()
 def create_filter_cheby(wp, ws, gpass, gstop, fs):
 
     # your code here #
-
+    
+    N,Wn = signal.cheb1ord(wp, ws, gpass, gstop,fs=fs)
+    
+    B, A = signal.cheby1(N,gpass,gstop,wp,'lowpass',fs=fs)
     return B, A
 
 def create_filter_cauer(wp, ws, gpass, gstop, fs):
 
     # your code here #
+    
+    N,Wn = signal.ellipord(wp,ws,gpass,gstop,fs=fs)
+
+    B, A = signal.ellip(N,gpass,gstop,wp,'lowpass',fs=fs)
 
     return B, A
 #a
@@ -133,7 +158,7 @@ def create_filter_cauer(wp, ws, gpass, gstop, fs):
 def downsampling(sig, B, A, M):
 
     # your code here #
-
+     
     return out
 
 
