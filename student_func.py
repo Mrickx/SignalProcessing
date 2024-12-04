@@ -159,9 +159,9 @@ def create_filter_cauer(wp, ws, gpass, gstop, fs):
 ## 3 - Decimation
 def downsampling(sig, B, A, M):
 
-    signal_filtered = lfilter(B,A,sig)
+    signal_filtered = signal.lfilter(B,A,sig)
 
-    signal_decimated = signal_filtered(::M)
+    signal_decimated = signal_filtered[::M]
      
     return signal_decimated
 
