@@ -131,7 +131,6 @@ specific_file = "LocateClaps\\M1_0.wav"#J'ai besoin signal audio
 signal_audio, sampling_rate = read_wavefile(specific_file)
 
 
-
 plt.specgram(signal_audio, Fs=sampling_rate )
 plt.title("Spectrogram")
 plt.show()
@@ -167,7 +166,9 @@ def downsampling(sig, B, A, M):
 
 
 # call and test your function here
-
+t = np.arange(0,200/fs,1/fs)
+sin1 = 1000*np.sin(2*np.pi*8500*t)
+sin2 = 20*np.sin(2*np.pi*7500*t)
 # %% [markdown]
 # ### 1.4 Cross-correlation
 #g
@@ -179,12 +180,36 @@ import numpy as np
 def fftxcorr(in1, in2):
     
     # your code here #
+    
+    n = len(in1) + len(in2) - 1
+    
+    FFT1 = np.fft.fft(in1,n=n)
+    FFT2 = np.fft.fft(in2,n=n)
+    
+    corr = np.fft.ifft(FFT1 * np.conj(FFT2))
+    
+    out = corr
 
     return out
     
 # call and test your function here #
 
-xcorr_fftconv = sc.fftconvolve(your_signal, your_signal[::-1], 'full') # [::-1] flips the signal but you can also use np.flip()
+xcorr_fftconv = sc.fftconvolve(sin1, sin2[::-1], 'full') # [::-1] flips the signal but you can also use np.flip()
+
+xcorr = fftxcorr(sin1,sin2)
+
+n_conv = np.arange(-(len(sin1) - 1), len(sin1))
+n_fft = np.arange(-len(sin1) + 1, len(sin1))
+
+plt.figure(figsize=(10, 4))
+plt.plot(n_fft, xcorr, label='Autocorrelation (fftxcorr)', color='blue')
+plt.plot(n_conv, xcorr_fftconv, label='Autocorrelation (fftconvolve)', color='orange', linestyle='dashed')
+plt.title("Comparison of Autocorrelation Methods")
+plt.xlabel("Time")
+plt.ylabel("Amplitude")
+plt.legend()
+plt.grid()
+plt.show()
 
 # %% [markdown]
 # ### 1.5 Localisation
