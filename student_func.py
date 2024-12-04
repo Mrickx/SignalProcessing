@@ -251,6 +251,12 @@ def localize_sound(deltas):
 def source_angle(coordinates):
     
     # your code here
+    x = coordinates[0]
+    y = coordinates[1]
+    
+    hypotenus = np.sqrt(x**2 + y**2)
+    
+    out = np.arcsin(x/hypotenus)
 
     return out
 
