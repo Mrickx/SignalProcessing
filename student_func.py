@@ -105,7 +105,9 @@ def normalise(s):
     if max_val == 0:
         return s
 
-    return s/max_val
+    out = s/max_val 
+
+    return out
 
 # call and test your function here #
 sin_normalise = normalise(sin)
@@ -157,9 +159,11 @@ def create_filter_cauer(wp, ws, gpass, gstop, fs):
 ## 3 - Decimation
 def downsampling(sig, B, A, M):
 
-    # your code here #
+    signal_filtered = lfilter(B,A,sig)
+
+    signal_decimated = signal_filtered(::M)
      
-    return out
+    return signal_decimated
 
 
 # call and test your function here
@@ -189,9 +193,11 @@ xcorr_fftconv = sc.fftconvolve(your_signal, your_signal[::-1], 'full') # [::-1] 
 # %%
 def TDOA(xcorr):
     
-    # your code here #
+    max_index = np.argmax(np.abs(xcorr))
 
-    return out
+    sample_offset = max_index - (len(xcorr) / 2)
+    
+    return sample_offset
 
 # %% [markdown]
 # #### 1.5.2 Equation system
@@ -232,9 +238,13 @@ def source_angle(coordinates):
 ## 1.6.1
 def accuracy(pred_angle, gt_angle, threshold):
     
-    # your code here #
+    angle_accuracy = np.abs(pred_angle - gt_angle)
 
-    return out
+    angle_accuracy = np.min(angle_accuracy, 360 - angle_accuracy)
+
+    return angle_accuracy <= threshold
+
+
 
 ## 1.6.2
 possible_angle = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
