@@ -155,6 +155,11 @@ def create_filter_cauer(wp, ws, gpass, gstop, fs):
 
     return B, A
 #a
+
+
+# wp = 16000 ws = 20000 gpass = 5db gstop = 40db
+#https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.ellipord.html#scipy.signal.ellipord
+#https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.ellip.html
 ## 3 - Decimation
 def downsampling(sig, B, A, M):
 
