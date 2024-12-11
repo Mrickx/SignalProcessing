@@ -171,9 +171,14 @@ def downsampling(sig, B, A, M):
 
 
 # call and test your function here
-t = np.arange(0,200/fs,1/fs)
-sin1 = 1000*np.sin(2*np.pi*8500*t)
-sin2 = 20*np.sin(2*np.pi*7500*t)
+sin1=create_sine_wave(8500,1000,fs,N)
+sin2=create_sine_wave(7500,20,fs,N)
+M=3
+sin_test = sin1 + sin2
+B_cauer,A_cauer = create_filter_cauer(16000,20000,5,40,fs)
+sin_test_downsampled = downsampling(sin_test,B_cauer,A_cauer,M)
+plt.plot(sin_test_downsampled)
+plt.show()
 # %% [markdown]
 # ### 1.4 Cross-correlation
 #g
