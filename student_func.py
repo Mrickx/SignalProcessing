@@ -140,9 +140,9 @@ def create_filter_cheby(wp, ws, gpass, gstop, fs):
 
     # your code here #
     
-    N,Wn = signal.cheb1ord(wp, ws, gpass, gstop,fs=fs)
+    N,Wn = signal.cheb1ord(wp, ws, gpass,gstop,fs=fs)
     
-    B, A = signal.cheby1(N,gpass,gstop,wp,'lowpass',fs=fs)
+    B, A = signal.cheby1(N,gpass,wp,'low',fs=fs)
     return B, A
 
 def create_filter_cauer(wp, ws, gpass, gstop, fs):
@@ -177,7 +177,10 @@ M=3
 sin_test = sin1 + sin2
 B_cauer,A_cauer = create_filter_cauer(16000,20000,5,40,fs)
 sin_test_downsampled = downsampling(sin_test,B_cauer,A_cauer,M)
-plt.plot(sin_test_downsampled)
+
+w,h=signal.freqz(sin_test_downsampled,fs=fs)
+plt.plot(w,abs(h))
+
 plt.show()
 # %% [markdown]
 # ### 1.4 Cross-correlation
