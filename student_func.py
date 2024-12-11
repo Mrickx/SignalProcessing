@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 from Graph import graph
 import os 
 from scipy import signal
+from scipy.signal import lfilter
 
 def create_sine_wave(f, A, fs, N):
     
@@ -31,15 +32,15 @@ freq = 20
 amplitude = 4
 
 sin=create_sine_wave(freq,amplitude,fs,N)
-plt.plot(sin)
-graph("Signal sinusoïdale de fréquence 20 Hz","Echantillon","Amplitude")
-plt.show()
+#plt.plot(sin)
+#graph("Signal sinusoïdale de fréquence 20 Hz","Echantillon","Amplitude")
+#plt.show()
 
 # %%
 from glob import glob
 import scipy.io.wavfile as wf
 import audiofile 
-
+import re
 
 #!!!!!!!!!!!!!!!!!ATTENTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  #!!! Ne pas appeler les variables signal car il peut confonde avec signal. de scipy!!!
@@ -56,6 +57,17 @@ def read_wavefile(path):
 # call and test your function here #
 LocateClaps = "LocateClaps"
 files = glob(f"{LocateClaps}/*.wav")
+# Fonction de clé de tri
+def sorting_key(f):
+    match = re.search(r'M(\d+)_(\d+)', f)
+    if match:
+        group = int(match.group(1))  # Numéro après 'M'
+        angle = int(match.group(2))  # Angle
+        return (group, angle)
+    return (float('inf'), float('inf'))  # Pour gérer les fichiers sans correspondance
+
+# Trier par groupe (M1, M2, etc.) et angle croissant
+files = sorted(files, key=sorting_key)
 x=len(files)
 # Chemin vers le fichier spécifique
 all_signals = []
