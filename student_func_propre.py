@@ -362,6 +362,30 @@ product = time_delay(func_example, [2, 10])
 
 # call and test your previous functions here #
 
+normalisés=time_delay(normalise,[all_signals[i]])
+a=time_delay(downsampling,[normalisés,B_cauer,A_cauer,M])
+
+print("Time delay lorsque les signaux sont downsamplés")
+xcorr1=time_delay(fftxcorr,[all_signals_post[n],all_signals_post[n+12]])
+xcorr2=time_delay(sc.fftconvolve,[all_signals_post[n], all_signals_post[n+24]])
+tdoa1=time_delay(TDOA,[xcorr1])
+tdoa2=TDOA([xcorr2])
+xy=time_delay(localize_sound,[np.array([tdoa1,tdoa2])])
+angle=time_delay(source_angle,[xy])
+
+
+print("Time delay lorsqu'ils ne sont pas downsamplés")
+all_signals_normalisés = ['']*len(files)
+for i in range(len(files)):
+    all_signals_normalisés[i] = normalise(all_signals[i])
+  
+xcorr3=time_delay(fftxcorr,[all_signals_normalisés[n],all_signals_normalisés[n+12]])
+xcorr4=time_delay(sc.fftconvolve,[all_signals_normalisés[n], all_signals_normalisés[n+24]])
+tdoa3=time_delay(TDOA,[xcorr3])
+tdoa4=TDOA([xcorr4])
+xy2=time_delay(localize_sound,[np.array([tdoa3,tdoa4])])
+angle=time_delay(source_angle,[xy2])
+
 # %% [markdown]
 # ## 2 Real-time localisation
 
