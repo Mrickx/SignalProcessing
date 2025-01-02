@@ -62,8 +62,8 @@ def sorting_key(f):
     match = re.search(r'M(\d+)_(\d+)', f)
     if match:
         group = int(match.group(1))  # Numéro après 'M'
-        angle = int(match.group(2))  # Angle
-        return (group, angle)
+        angle1 = int(match.group(2))  # Angle
+        return (group, angle1)
     return (float('inf'), float('inf'))  # Pour gérer les fichiers sans correspondance
 
 # Trier par groupe (M1, M2, etc.) et angle croissant
@@ -241,13 +241,15 @@ plt.show()
 # #### 1.5.1 TDOA
 #a
 # %%
-def TDOA(xcorr):
+
+    
+def TDOA(xcorr,fs=44100):
     
     max_index = np.argmax(np.abs(xcorr))
-
     sample_offset = max_index - (len(xcorr) / 2)
-    
-    return sample_offset
+    time_delay=sample_offset/fs
+        
+    return time_delay
 
 # %% [markdown]
 # #### 1.5.2 Equation system
@@ -279,11 +281,17 @@ def source_angle(coordinates):
     x = coordinates[0]
     y = coordinates[1]
     
-    hypotenus = np.sqrt(x**2 + y**2)
+    out = np.arctan(y/x)   #vérifier formule, pourquoi x et pas y
+    out = np.degrees(out)
     
-    out = np.arcsin(x/hypotenus)
-
-    return out
+    if(x > 0 and y> 0 ):
+        return out
+    if(x < 0 and y> 0 ):
+        return out + 180
+    if(x < 0 and y < 0 ):
+        return out + 180
+    if(x > 0 and y < 0 ):
+        return out + 360
 
 # call and test your function here #
 
